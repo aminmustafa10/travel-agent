@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Trip {
+  id                 String   @id @default(cuid())
+  name               String
+  destinationCity    String
+  destinationCountry String
+  startDate          DateTime
+  endDate            DateTime
+  currency           String   @db.Char(3)
+  weeklyBudgetCents  Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

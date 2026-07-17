@@ -17,3 +17,5 @@ npm-debug.log*
 *.tsbuildinfo
 coverage/
 
+# Generated Prisma Client
+backend/src/generated/prisma/
