@@ -1,4 +1,6 @@
 import express from 'express'
+import { tripRoutes } from './modules/trips/trip.routes.js'
+import { errorHandler } from './shared/middlewares/error-handler.js'
 
 export const app = express()
 
@@ -11,3 +13,6 @@ app.get('/health', (_request, response) => {
   })
 })
 
+app.use('/trips', tripRoutes)
+
+app.use(errorHandler)
