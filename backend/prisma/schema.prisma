@@ -8,14 +8,40 @@ datasource db {
 }
 
 model Trip {
-  id                 String   @id @default(cuid())
+  id                 String    @id @default(cuid())
   name               String
   destinationCity    String
   destinationCountry String
   startDate          DateTime
   endDate            DateTime
-  currency           String   @db.Char(3)
+  currency           String    @db.Char(3)
   weeklyBudgetCents  Int
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  expenses           Expense[]
+}
+
+enum ExpenseCategory {
+  ACCOMMODATION
+  FOOD
+  TRANSPORT
+  LEISURE
+  SHOPPING
+  HEALTH
+  EDUCATION
+  OTHER
+}
+
+model Expense {
+  id          String          @id @default(cuid())
+  tripId      String
+  description String
+  amountCents Int
+  category    ExpenseCategory
+  expenseDate DateTime
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  trip        Trip            @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([tripId, expenseDate])
 }
