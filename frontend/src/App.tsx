@@ -1,12 +1,8 @@
 import './App.css'
+import { TripOverviewPage } from './pages/TripOverviewPage'
 
 function App() {
-  return (
-    <main>
-      <h1>Travel Agent</h1>
-      <p>Seu assistente preventivo para viagens</p>
-    </main>
-  )
+  return <TripOverviewPage />
 }
 
 export default App
