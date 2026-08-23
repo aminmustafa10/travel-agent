@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AlertCard } from '../components/AlertCard'
+import { ExpensesPanel } from '../components/ExpensesPanel'
 import { MetricCard } from '../components/MetricCard'
 import { StatusBadge } from '../components/StatusBadge'
 import {
@@ -46,7 +47,11 @@ export function TripOverviewPage({
     let isCurrent = true
 
     async function loadOverview() {
-      setViewState({ status: 'loading' })
+      setViewState((current) =>
+        current.status === 'success' && current.data.tripId === tripId
+          ? current
+          : { status: 'loading' },
+      )
 
       try {
         const data = await getTripOverview(tripId)
@@ -277,6 +282,12 @@ export function TripOverviewPage({
             </div>
           </section>
 
+          <ExpensesPanel
+            tripId={tripId}
+            currency={overview.trip.currency}
+            onExpensesChanged={() => setReloadKey((current) => current + 1)}
+          />
+
           {alertMetrics && (
             <section
               className="dashboard-section"
@@ -357,4 +368,3 @@ export function TripOverviewPage({
     </main>
   )
 }
-
